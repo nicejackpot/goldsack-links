@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="상품 이미지 준비 중">
+<rect width="320" height="320" rx="36" fill="#f2e8c9"/>
+<rect x="56" y="74" width="208" height="172" rx="26" fill="#fff8de" stroke="#d8c27b" stroke-width="8"/>
+<rect x="78" y="104" width="164" height="18" rx="9" fill="#d6bc70"/>
+<rect x="78" y="136" width="126" height="18" rx="9" fill="#e7d8a3"/>
+<rect x="78" y="182" width="104" height="32" rx="16" fill="#1d1d26"/>
+<circle cx="234" cy="198" r="24" fill="#ffd640"/>
+</svg>
