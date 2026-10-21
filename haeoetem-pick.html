@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>해외템픽 추천템 · 영상으로 찾는 상품</title>
+  <meta name="description" content="해외템픽 영상 썸네일이나 상품 번호로 소개된 제품을 찾아보세요. 같은 제품군·참고 상품 여부를 함께 안내합니다.">
+  <link rel="canonical" href="https://nicejackpot.github.io/goldsack-links/haeoetem-pick.html">
+  <meta property="og:title" content="해외템픽 추천템">
+  <meta property="og:description" content="방금 본 영상, 여기서 찾으세요. 영상 썸네일·상품 번호로 쉽게 찾는 추천템.">
+  <meta property="og:type" content="website">
+  <style>
+    :root { color-scheme: dark; --bg:#10131d; --surface:#1b2030; --ink:#f6f7fb; --muted:#c1c6d6; --line:#3c455c; --accent:#ffd640; --accent-ink:#17190e; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; line-height:1.55; }
+    ::selection { background:var(--accent); color:var(--accent-ink); }
+    button,input,select { font:inherit; }
+    a { color:inherit; text-underline-offset:.2em; }
+    button,a,input,select,summary { -webkit-tap-highlight-color:transparent; }
+    :focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+    .wrap { width:min(100%,960px); margin:auto; padding:24px 20px 56px; }
+    .notice { margin:0; color:var(--muted); font-size:.75rem; line-height:1.65; }
+    header { padding:28px 0 22px; }
+    h1 { margin:0 0 8px; font-size:2rem; line-height:1.25; letter-spacing:-.03em; }
+    .intro { margin:0; color:var(--muted); font-size:1rem; word-break:keep-all; }
+    .intro strong { color:var(--ink); font-weight:600; }
+    .find { position:sticky; top:0; z-index:2; background:var(--bg); padding:12px 0 16px; border-bottom:1px solid var(--line); }
+    .find label { display:block; margin-bottom:8px; font-size:.875rem; font-weight:600; }
+    .search-row { display:flex; gap:8px; }
+    input { min-width:0; flex:1; width:100%; min-height:48px; padding:12px 14px; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:10px; caret-color:var(--accent); }
+    input::placeholder { color:var(--muted); opacity:1; }
+    button { min-height:48px; padding:10px 14px; background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:10px; cursor:pointer; }
+    button:disabled { opacity:.45; cursor:default; }
+    button:not(:disabled):hover { background:#2a3145; }
+    .stats { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:16px 0; color:var(--muted); font-size:.8125rem; }
+    select { min-height:44px; max-width:160px; border:1px solid var(--line); border-radius:8px; padding:8px 10px; color:var(--ink); background:var(--surface); }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; gap:24px 16px; }
+    .card { min-width:0; background:var(--surface); border-radius:12px; overflow:hidden; }
+    .product-link { display:block; text-decoration:none; }
+    .product-link:hover .shop-action { background:#ffe578; }
+    .product-link:focus-visible { outline-offset:-4px; }
+    .card-top { min-height:46px; display:flex; justify-content:space-between; align-items:center; gap:6px; padding:8px 12px; }
+    .number-label { display:flex; align-items:baseline; gap:5px; color:var(--accent); font-size:.75rem; white-space:nowrap; }
+    .num { font-size:1.5rem; line-height:1; font-weight:800; font-variant-numeric:tabular-nums; }
+    .match-label { color:var(--muted); font-size:.6875rem; text-align:right; word-break:keep-all; }
+    .video-thumb { display:block; width:100%; height:auto; aspect-ratio:18/25; object-fit:cover; background:#07090f; }
+    .card-copy { padding:14px 12px 12px; }
+    .video-title { color:var(--muted); font-size:.75rem; line-height:1.5; margin:0 0 8px; overflow-wrap:anywhere; }
+    h2 { margin:0 0 14px; font-size:1rem; line-height:1.5; font-weight:700; word-break:keep-all; overflow-wrap:anywhere; }
+    .shop-action { display:flex; min-height:44px; align-items:center; justify-content:space-between; gap:4px; border-radius:8px; padding:10px 12px; background:var(--accent); color:var(--accent-ink); font-size:.8125rem; font-weight:700; }
+    .match-detail { border-top:1px solid var(--line); font-size:.75rem; color:var(--muted); }
+    summary { min-height:44px; padding:12px; cursor:pointer; word-break:keep-all; }
+    .match-detail p { margin:0; padding:0 12px 14px; line-height:1.7; word-break:keep-all; overflow-wrap:anywhere; }
+    .empty { text-align:center; padding:40px 12px; }
+    .empty h2 { margin-bottom:8px; font-size:1.125rem; }
+    .empty p { color:var(--muted); margin:0 0 20px; }
+    footer { margin-top:32px; border-top:1px solid var(--line); padding-top:20px; color:var(--muted); font-size:.75rem; line-height:1.75; }
+    [hidden] { display:none !important; }
+    @media (max-width:640px) {
+      .wrap { padding:18px 16px 40px; }
+      header { padding:24px 0 18px; }
+      h1 { font-size:1.75rem; }
+      .intro { font-size:.9375rem; }
+      .cards { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; }
+      .card-top { padding:9px 10px; }
+      .card-copy { padding:12px 10px 10px; }
+      .match-label { font-size:.625rem; }
+      h2 { font-size:.9375rem; }
+      .shop-action { padding:10px; font-size:.75rem; }
+      summary { padding:12px 10px; font-size:.6875rem; }
+    }
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <p class="notice">쿠팡 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  <header>
+    <h1>해외템픽 추천템</h1>
+    <p class="intro">방금 본 영상, 여기서 찾으세요.<br><strong>영상 썸네일</strong>을 누르거나 <strong>상품 번호</strong>를 검색하세요.</p>
+  </header>
+  <section class="find" aria-label="상품 찾기">
+    <label for="search">상품 번호나 이름으로 찾기</label>
+    <div class="search-row">
+      <input id="search" type="search" placeholder="예: 18, 인스턴트팟" autocomplete="off" enterkeyhint="search" aria-controls="products">
+      <button id="clear" type="button" disabled>지우기</button>
+    </div>
+  </section>
+  <div class="stats">
+    <span id="count" role="status" aria-live="polite" aria-atomic="true">전체 19개</span>
+    <select id="sort" aria-label="상품 정렬"><option value="newest">최신 상품순</option><option value="number">번호 낮은순</option></select>
+  </div>
+  <div class="cards" id="products">
+<article class="card" id="product-20" data-number="20" data-search="셀프 파마 세트 셀프 파마는 곱슬로 남을까요? 셀프 파마">
+  <a class="product-link" href="https://link.coupang.com/a/hXnNJ7yMs8" target="_blank" rel="sponsored noopener noreferrer" aria-label="20번 셀프 파마 세트 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">20</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/20-549007b350eba000.jpg" width="432" height="600" alt="셀프 파마는 곱슬로 남을까요? 영상 썸네일" loading="eager" decoding="async">
+    <div class="card-copy"><p class="video-title">셀프 파마는 곱슬로 남을까요?</p><h2>셀프 파마 세트</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상은 로드와 용액으로 하는 셀프 파마다. 연결 상품은 다나미 무알카리 셀프파마세트 계열이다. 브랜드와 향은 확인하지 않았고 같은 SKU가 아니다.</p></details>
+</article>
+<article class="card" id="product-18" data-number="18" data-search="인스턴트팟 압력솥 달걀을 물에 안 담가도 정말 익을까요? 인스턴트팟">
+  <a class="product-link" href="https://link.coupang.com/a/hO6JxsA6Xk" target="_blank" rel="sponsored noopener noreferrer" aria-label="18번 인스턴트팟 압력솥 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">18</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/18-f19599c291cd4cc1.jpg" width="432" height="600" alt="달걀을 물에 안 담가도 정말 익을까요? 영상 썸네일" loading="eager" decoding="async">
+    <div class="card-copy"><p class="video-title">달걀을 물에 안 담가도 정말 익을까요?</p><h2>인스턴트팟 압력솥</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상은 Instant Pot 계열 압력 멀티쿠커이며, 연결 상품도 같은 제품군입니다. 영상 속 정확한 모델과 판매 상품의 모델·용량은 같다고 단정하지 않습니다.</p></details>
+</article>
+<article class="card" id="product-17" data-number="17" data-search="클리오네 셀프 속눈썹펌 10회분 집에서 한 속눈썹펌 생각보다 어렵네요 셀프 속눈썹펌">
+  <a class="product-link" href="https://link.coupang.com/a/hO18u9zgqa" target="_blank" rel="sponsored noopener noreferrer" aria-label="17번 클리오네 셀프 속눈썹펌 10회분 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">17</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/17-d72b0cd6c4a9a6df.jpg" width="432" height="600" alt="집에서 한 속눈썹펌 생각보다 어렵네요 영상 썸네일" loading="eager" decoding="async">
+    <div class="card-copy"><p class="video-title">집에서 한 속눈썹펌 생각보다 어렵네요</p><h2>클리오네 셀프 속눈썹펌 10회분</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상 키트는 ICONSIGN LASH LIFT다. 쿠팡 상품은 클리오네 셀프 속눈썹펌 세트라 같은 제품군이고 같은 SKU는 아니다.</p></details>
+</article>
+<article class="card" id="product-16" data-number="16" data-search="ORBIT 츄잉껌 벌크 팩 오르빗껌 고를 때 상자 색만 보면 될까? 오르빗 껌">
+  <a class="product-link" href="https://link.coupang.com/a/hO16hGUvee" target="_blank" rel="sponsored noopener noreferrer" aria-label="16번 ORBIT 츄잉껌 벌크 팩 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">16</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/16-592864c67edadd6b.jpg" width="432" height="600" alt="오르빗껌 고를 때 상자 색만 보면 될까? 영상 썸네일" loading="eager" decoding="async">
+    <div class="card-copy"><p class="video-title">오르빗껌 고를 때 상자 색만 보면 될까?</p><h2>ORBIT 츄잉껌 벌크 팩</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상은 여러 맛의 Orbit 팩을 보여 준다. 쿠팡 후보는 페퍼민트·스피어민트·윈터민트 벌크라 같은 브랜드 제품군이다. 화면의 수박 맛과 같은 SKU는 아니다.</p></details>
+</article>
+<article class="card" id="product-15" data-number="15" data-search="인스턴트팟 듀오 크리스프 멀티압력쿠커 같은 냄비인데 뚜껑이 2개인 이유 인스턴트팟 듀오 크리스프">
+  <a class="product-link" href="https://link.coupang.com/a/hNpIozhS0G" target="_blank" rel="sponsored noopener noreferrer" aria-label="15번 인스턴트팟 듀오 크리스프 멀티압력쿠커 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">15</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/15-d6210b5a1c9002e8.jpg" width="432" height="600" alt="같은 냄비인데 뚜껑이 2개인 이유 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">같은 냄비인데 뚜껑이 2개인 이유</p><h2>인스턴트팟 듀오 크리스프 멀티압력쿠커</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상과 같은 듀오 크리스프 제품군이며 용량과 세부 모델은 판매 페이지에서 확인해야 합니다.</p></details>
+  <p class="card-copy"><a href="guides/duo-crisp/">구매 전 확인 3가지</a></p>
+</article>
+<article class="card" id="product-14" data-number="14" data-search="탱글티저 웻 디탱글러 헤어브러쉬 머리 엉켰을 때 이 빗부터 쓰지 마요 디탱글 브러시">
+  <a class="product-link" href="https://link.coupang.com/a/hNpIlXTxfM" target="_blank" rel="sponsored noopener noreferrer" aria-label="14번 탱글티저 웻 디탱글러 헤어브러쉬 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">14</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/14-54c7e9005beeca51.jpg" width="432" height="600" alt="머리 엉켰을 때 이 빗부터 쓰지 마요 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">머리 엉켰을 때 이 빗부터 쓰지 마요</p><h2>탱글티저 웻 디탱글러 헤어브러쉬</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상은 용도별 헤어브러시 선택법이며 링크는 같은 제품군의 젖은 머리용 디탱글 브러시입니다.</p></details>
+</article>
+<article class="card" id="product-13" data-number="13" data-search="필립스 파워 핸드블렌더 5000 시리즈 소스 젓다 팔 아프면 이 도구를 써 보세요 핸드블렌더">
+  <a class="product-link" href="https://link.coupang.com/a/hNpIjDWpNI" target="_blank" rel="sponsored noopener noreferrer" aria-label="13번 필립스 파워 핸드블렌더 5000 시리즈 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">13</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/13-fe5c5ed7f8c1adab.jpg" width="432" height="600" alt="소스 젓다 팔 아프면 이 도구를 써 보세요 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">소스 젓다 팔 아프면 이 도구를 써 보세요</p><h2>필립스 파워 핸드블렌더 5000 시리즈</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상은 핸드블렌더 조리법이며 링크는 같은 제품군의 국내 판매 핸드블렌더입니다.</p></details>
+</article>
+<article class="card" id="product-12" data-number="12" data-search="무열 수면 헤어롤 고데기 없이 자면서 컬 만드는 법 11가지, 1등은?? 히트리스 컬링 헤어밴드">
+  <a class="product-link" href="https://link.coupang.com/a/hFwuAr75aK" target="_blank" rel="sponsored noopener noreferrer" aria-label="12번 무열 수면 헤어롤 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">12</strong></span><span class="match-label">참고·호환 상품</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/12-14e3135ad80365e4.jpg" width="432" height="600" alt="고데기 없이 자면서 컬 만드는 법 11가지, 1등은?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">고데기 없이 자면서 컬 만드는 법 11가지, 1등은??</p><h2>무열 수면 헤어롤</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>자면서 감아 쓰는 무열 헤어롤로 영상 속 컬링 헤어밴드와 같은 용도의 제품이며 원본 사용 제품과 동일하다고 확인된 제품은 아닙니다.</p></details>
+</article>
+<article class="card" id="product-11" data-number="11" data-search="압력센서 전동칫솔 · 오아 클린이소프트R 전동칫솔 이렇게 쓰면 잇몸 다 망가져요 전동칫솔 압력센서">
+  <a class="product-link" href="https://link.coupang.com/a/hFwuAnHYBM" target="_blank" rel="sponsored noopener noreferrer" aria-label="11번 압력센서 전동칫솔 · 오아 클린이소프트R · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">11</strong></span><span class="match-label">참고·호환 상품</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/11-046d3c0d814d81ff.jpg" width="432" height="600" alt="전동칫솔 이렇게 쓰면 잇몸 다 망가져요 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">전동칫솔 이렇게 쓰면 잇몸 다 망가져요</p><h2>압력센서 전동칫솔 · 오아 클린이소프트R</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>압력 센서가 있는 전동칫솔 참고 상품이며 영상 속 사용 제품과 같은 모델은 아닙니다.</p></details>
+</article>
+<article class="card" id="product-10" data-number="10" data-search="롯데 초코파이 세숫대야만 한 초대형 초코파이 먹방, 생크림 찍어 먹으면?? 롯데 초코파이">
+  <a class="product-link" href="https://link.coupang.com/a/hFwuAiKHwj" target="_blank" rel="sponsored noopener noreferrer" aria-label="10번 롯데 초코파이 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">10</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/10-45e1520b8876d93c.jpg" width="432" height="600" alt="세숫대야만 한 초대형 초코파이 먹방, 생크림 찍어 먹으면?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">세숫대야만 한 초대형 초코파이 먹방, 생크림 찍어 먹으면??</p><h2>롯데 초코파이</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상 속 초대형 초코파이는 일본 롯데 한정판이라 쿠팡에서 판매하지 않으며, 국내 롯데웰푸드 일반 초코파이입니다.</p></details>
+</article>
+<article class="card" id="product-09" data-number="9" data-search="붙이는 네일팁 · 키스뉴욕 프레스앤고 셀프 아크릴 네일, 혼자 해보면 생기는 일 붙이는 네일팁">
+  <a class="product-link" href="https://link.coupang.com/a/hFwuz9eqYv" target="_blank" rel="sponsored noopener noreferrer" aria-label="09번 붙이는 네일팁 · 키스뉴욕 프레스앤고 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">09</strong></span><span class="match-label">참고·호환 상품</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/09-f9bfe23dab60f3c2.jpg" width="432" height="600" alt="셀프 아크릴 네일, 혼자 해보면 생기는 일 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">셀프 아크릴 네일, 혼자 해보면 생기는 일</p><h2>붙이는 네일팁 · 키스뉴욕 프레스앤고</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>셀프 네일 대안으로 참고할 수 있는 붙이는 네일팁이며 영상 속 사용 제품과 동일하다고 확인된 제품은 아닙니다.</p></details>
+</article>
+<article class="card" id="product-08" data-number="8" data-search="레브론 원스텝 볼류마이저 틱톡에서 난리 난 드라이기 브러시, 헤어 디자이너가 써보니?? 레브론 원스텝 볼류마이저">
+  <a class="product-link" href="https://link.coupang.com/a/hFwuz3NJEy" target="_blank" rel="sponsored noopener noreferrer" aria-label="08번 레브론 원스텝 볼류마이저 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">08</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/08-824b7a5ae7cd5cb3.jpg" width="432" height="600" alt="틱톡에서 난리 난 드라이기 브러시, 헤어 디자이너가 써보니?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">틱톡에서 난리 난 드라이기 브러시, 헤어 디자이너가 써보니??</p><h2>레브론 원스텝 볼류마이저</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상과 같은 레브론 원스텝 볼류마이저 제품군이며 해외 판매처 상품일 수 있습니다. 판매처·배송 조건과 전압을 확인하세요.</p></details>
+</article>
+<article class="card" id="product-07" data-number="7" data-search="스탠리 호환 텀블러 얼음틀 텀블러 안에 맥주병? 이 얼음이 포인트예요 텀블러 얼음틀">
+  <a class="product-link" href="https://link.coupang.com/a/hED25s34Cq" target="_blank" rel="sponsored noopener noreferrer" aria-label="07번 스탠리 호환 텀블러 얼음틀 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">07</strong></span><span class="match-label">참고·호환 상품</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/07-614609a714456ddc.jpg" width="432" height="600" alt="텀블러 안에 맥주병? 이 얼음이 포인트예요 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">텀블러 안에 맥주병? 이 얼음이 포인트예요</p><h2>스탠리 호환 텀블러 얼음틀</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상과 같은 용도의 원통 얼음틀 호환품이며 원본 제품의 제조사는 확인되지 않았습니다. 텀블러 용량·치수를 확인하세요.</p></details>
+</article>
+<article class="card" id="product-06" data-number="6" data-search="핵불닭볶음면 2배 매운맛 핵불닭 2배 매운맛, 외국인 셋이 먹어보니?? 핵불닭볶음면">
+  <a class="product-link" href="https://link.coupang.com/a/hED25oGIxM" target="_blank" rel="sponsored noopener noreferrer" aria-label="06번 핵불닭볶음면 2배 매운맛 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">06</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/06-e8315480df649f43.jpg" width="432" height="600" alt="핵불닭 2배 매운맛, 외국인 셋이 먹어보니?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">핵불닭 2배 매운맛, 외국인 셋이 먹어보니??</p><h2>핵불닭볶음면 2배 매운맛</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>2배 매운맛 봉지 제품입니다. 구매 구성·수량은 영상과 다를 수 있습니다.</p></details>
+</article>
+<article class="card" id="product-05" data-number="5" data-search="크림 블러셔 · 롬앤 쥬시 알 치크 블러셔를 볼 말고 귀에도 바른다고요? 크림 블러셔">
+  <a class="product-link" href="https://link.coupang.com/a/hED25jYh52" target="_blank" rel="sponsored noopener noreferrer" aria-label="05번 크림 블러셔 · 롬앤 쥬시 알 치크 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">05</strong></span><span class="match-label">참고·호환 상품</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/05-3ba4e23d890b8b13.jpg" width="432" height="600" alt="블러셔를 볼 말고 귀에도 바른다고요? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">블러셔를 볼 말고 귀에도 바른다고요?</p><h2>크림 블러셔 · 롬앤 쥬시 알 치크</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>화장법에 활용할 수 있는 참고 상품이며 영상 속 사용 브랜드·색상과 동일하다고 확인된 제품은 아닙니다.</p></details>
+</article>
+<article class="card" id="product-04" data-number="4" data-search="다이슨 코랄 공식 제품 안내 다이슨 무선 고데기 편하다는 말 뒤에는? 다이슨 코랄 무선 고데기">
+  <a class="product-link" href="https://www.dyson.co.kr/products/hair-care/dyson-corrale-straightener/overview" target="_blank" rel="sponsored noopener noreferrer" aria-label="04번 다이슨 코랄 공식 제품 안내 · 공식 안내 보기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">04</strong></span><span class="match-label">공식 제품 안내</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/04-333dde8ba81994aa.jpg" width="432" height="600" alt="다이슨 무선 고데기 편하다는 말 뒤에는? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">다이슨 무선 고데기 편하다는 말 뒤에는?</p><h2>다이슨 코랄 공식 제품 안내</h2><span class="shop-action">공식 안내 보기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>쿠팡에서 해당 모델의 유효한 상품 링크를 확보하지 못해 제조사 공식 안내를 연결했습니다. 구매 가능 여부·재고는 공식 판매처에서 확인하세요.</p></details>
+</article>
+<article class="card" id="product-03" data-number="3" data-search="스탠리 퀜처 호환 누수 방지 마개 스탠리 텀블러의 치명적인 단점?? 스탠리 빨대마개">
+  <a class="product-link" href="https://link.coupang.com/a/hED25cSWcK" target="_blank" rel="sponsored noopener noreferrer" aria-label="03번 스탠리 퀜처 호환 누수 방지 마개 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">03</strong></span><span class="match-label">참고·호환 상품</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/03-f602d9c63a510b6c.jpg" width="432" height="600" alt="스탠리 텀블러의 치명적인 단점?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">스탠리 텀블러의 치명적인 단점??</p><h2>스탠리 퀜처 호환 누수 방지 마개</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상과 같은 용도의 호환품이며 원본 사용 제품의 제조사는 확인되지 않았습니다. 텀블러 모델·크기 호환을 확인하세요.</p></details>
+</article>
+<article class="card" id="product-02" data-number="2" data-search="하나큐어 올인원 페이셜 얼굴이 쫙 당겨지는 30분 마스크의 결과는?? 리프팅 마스크팩">
+  <a class="product-link" href="https://link.coupang.com/a/hED247h7gO" target="_blank" rel="sponsored noopener noreferrer" aria-label="02번 하나큐어 올인원 페이셜 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">02</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/02-03679f4310fd8ecd.jpg" width="432" height="600" alt="얼굴이 쫙 당겨지는 30분 마스크의 결과는?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">얼굴이 쫙 당겨지는 30분 마스크의 결과는??</p><h2>하나큐어 올인원 페이셜</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>영상에 소개된 브랜드·제품군의 판매 상품입니다. 판매 구성과 배송 조건을 확인하세요.</p></details>
+</article>
+<article class="card" id="product-01" data-number="1" data-search="까르보불닭볶음면 일본 대식가 아이돌이 세숫대야 까르보불닭을?? 까르보불닭볶음면">
+  <a class="product-link" href="https://link.coupang.com/a/hED241wY0a" target="_blank" rel="sponsored noopener noreferrer" aria-label="01번 까르보불닭볶음면 · 상품 보러 가기">
+    <div class="card-top"><span class="number-label">상품 <strong class="num">01</strong></span><span class="match-label">같은 제품군</span></div>
+    <img class="video-thumb" src="img/haeoetem-pick/01-8bce6d4e25533681.jpg" width="432" height="600" alt="일본 대식가 아이돌이 세숫대야 까르보불닭을?? 영상 썸네일" loading="lazy" decoding="async">
+    <div class="card-copy"><p class="video-title">일본 대식가 아이돌이 세숫대야 까르보불닭을??</p><h2>까르보불닭볶음면</h2><span class="shop-action">상품 보러 가기<span aria-hidden="true"> ↗</span></span></div>
+  </a>
+  <details class="match-detail"><summary>영상 속 제품과의 차이 확인</summary><p>같은 제품군이며 구매 묶음 수량은 영상과 다를 수 있습니다.</p></details>
+</article>
+  </div>
+  <section class="empty" id="empty" hidden>
+    <h2>찾는 상품이 없어요</h2>
+    <p>번호를 다시 확인하거나 상품 이름으로 찾아보세요.</p>
+    <button id="show-all" type="button">전체 상품 보기</button>
+  </section>
+  <footer>영상과 같은 모델이 아닐 수 있습니다. 각 상품의 ‘영상 속 제품과의 차이 확인’을 눌러 주세요.<br>가격·재고·배송·옵션은 판매 페이지에서 확인하세요.</footer>
+</main>
+<script>
+  const input = document.getElementById('search');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const list = document.getElementById('products');
+  const count = document.getElementById('count');
+  const empty = document.getElementById('empty');
+  const clear = document.getElementById('clear');
+  const sort = document.getElementById('sort');
+  const normalize = value => value.normalize('NFKC').toLocaleLowerCase('ko').replace(/\s+/g, '');
+  function applyFilter() {
+    const query = normalize(input.value.trim());
+    const number = query.match(/^(?:상품)?#?(\d+)번?$/);
+    let visible = 0;
+    for (const card of cards) {
+      const matched = !query || (number ? Number(card.dataset.number) === Number(number[1]) : normalize(card.dataset.search).includes(query));
+      card.hidden = !matched;
+      if (matched) visible++;
+    }
+    count.textContent = query ? `검색 결과 ${visible}개` : `전체 ${cards.length}개`;
+    empty.hidden = visible > 0;
+    clear.disabled = !input.value;
+  }
+  function resetSearch() { input.value = ''; applyFilter(); input.focus(); }
+  input.addEventListener('input', applyFilter);
+  clear.addEventListener('click', resetSearch);
+  document.getElementById('show-all').addEventListener('click', resetSearch);
+  sort.addEventListener('change', () => {
+    const direction = sort.value === 'number' ? 1 : -1;
+    cards.sort((a,b) => direction * (Number(a.dataset.number) - Number(b.dataset.number)));
+    for (const card of cards) list.appendChild(card);
+  });
+</script>
+</body>
+</html>
